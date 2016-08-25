@@ -16,11 +16,19 @@ module PaperTrail
         end
 
         def serialize(attr, val)
-          @klass.type_for_attribute(attr).serialize(val)
+          unless defined_enums[attr]
+            @klass.type_for_attribute(attr).serialize(val)
+          end
+
+          val
         end
 
         def deserialize(attr, val)
-          @klass.type_for_attribute(attr).deserialize(val)
+          unless defined_enums[attr]
+            @klass.type_for_attribute(attr).deserialize(val)
+          end
+
+          val
         end
       end
     else
