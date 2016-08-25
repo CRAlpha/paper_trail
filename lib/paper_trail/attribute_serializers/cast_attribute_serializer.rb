@@ -30,6 +30,14 @@ module PaperTrail
 
           val
         end
+
+        private
+
+        # ActiveRecord::Enum was added in AR 4.1
+        # http://edgeguides.rubyonrails.org/4_1_release_notes.html#active-record-enums
+        def defined_enums
+          @defined_enums ||= (@klass.respond_to?(:defined_enums) ? @klass.defined_enums : {})
+        end
       end
     else
       # This implementation uses AR 4.2's `type_cast_for_database`. For
